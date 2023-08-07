@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link  rel="stylesheet" href="{% static 'css/style-index.css' %}">   <!-- il faut load le fichier css pour appliquer les styles-->
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur mon site !</h1>
+        <h3>Nous sommes le {{ date|date:" l d F Y" }}</h2>
+        <h3>Il est actuellement {{ date|time:" H:i" }}</h2>
+    </div>
+</body>
+</html>

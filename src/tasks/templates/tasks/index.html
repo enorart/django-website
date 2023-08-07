@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="light">      <!-- changement de theme a implémenter-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pense-bête</title>
+    
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>        <!-- implementation de HTMX-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!-- implémentation de Bootstrap-->
+    
+    <!--implémentation d'une barre de scrolling quand la liste des taches est trop longue et donc dépasserait de l'écran-->
+    <style>
+         .container{   
+            max-height: 700px;
+            overflow-y: auto;    
+        }
+    </style>
+
+</head>
+<body>
+    
+
+    <div class="container-fluid mt-2">      <!-- il est utile de voir la border pour savoir d'où viennent les décalages-->
+    
+    <!-- <header class="d-flex align-items-center gap-2 mb-2 border"> -->
+    <header class="d-flex align-items-center justify-content-between gap-2 mb-2">    
+    
+        <div class="d-flex align-items-center gap-2">
+            <img src="https://cdn-icons-png.flaticon.com/64/7246/7246748.png" alt="TodoList">
+            <h1>Pense-bête</h1>
+        </div>
+    
+        <div class="d-flex align-items-center gap-2">
+            <img src="https://cdn-icons-png.flaticon.com/32/5262/5262027.png" alt="Toggle theme">
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="theme-switch"
+                    checked
+                    onclick="toggleTheme()"
+                />
+            </div>
+        </div>
+        
+    </header>
+    
+  
+    <div class="row">
+        <div class="col-md-3 ms-md-auto">
+            <nav id="collections" class="list-group" role="tablist">
+                {% for collection in collections %}  
+                    {% include 'tasks/collections.html' with collections=collections %}    <!-- on inclut le fichier collections.html qui contient le code pour afficher les collections-->
+                {% endfor %}    
+            </nav>
+            
+            <form method="POST" class="d-flex gap-2 mt-2 mb-2">         <!-- on utilise HTMX, donc seule la method POST ou GET marche -->
+                                                                                        <!-- attention bien mettre le nom de l'url, ici task-add-collection-->
+                {% csrf_token %}
+                    
+                <input  type="text" 
+                        class="form-control"
+                        name="collection-name" 
+                        placeholder="Collection...">  
+                <button class="btn btn-success"
+                        hx-post="{% url 'tasks-add-collection' %}"
+                        hx-target="#collections"   
+                        hx-swap="beforeend" 
+                        type="submit">
+                    +
+                </button>                          <!-- penser à mettre un nom au bouton sinon bouton tout petit-->
+                
+            </form>
+        </div>
+
+    <section class="col-md-9 ms-md-auto">         
+    <form method="POST" class="d-flex mb-4">
+
+        {% csrf_token %}
+
+        <input  type="text" 
+                class="form-control"
+                name="task-description" 
+                placeholder="Acheter du pain...."> 
+        <button class="btn btn-success"
+                hx-post="{% url 'tasks-add-task' %}"
+                hx-target="#tasks"  
+                hx-swap="beforeend"  
+                hx-vals="js:{collection: getCollectionFromURL()}"           
+                type="submit">
+            Ajouter
+        </button>       <!-- hx-vals permet d'insérer dynamiquement du code javascript, ici on l'utilise pour récupérer grâce à notre fonction le nom de la collection (grâce à son slug) qui se trouve dans l'url-->
+        
+    </form>
+        
+    <section id="tasks-container" class="container">
+        {% include 'tasks/tasks.html' with tasks=tasks collection=collection %}              <!-- on inclut le fichier tasks.html qui contient le code pour afficher les tâches-->
+    </section>
+    
+    </section>    
+    </div>
+    </div>
+    
+
+    <!-- pour faire une alerte si la collection est déjà ajouté-->
+    <script>
+        document.body.addEventListener('htmx:responseError', function(event) {
+            alert(event.detail.xhr.responseText);
+        })
+      
+        function confirmAction() {
+            return confirm("Êtes-vous sûr de vouloir supprimer définitivement cette collection ?");
+        }
+
+        function toggleTheme() {
+            const theme = document.documentElement.getAttribute('data-bs-theme');
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', 'light');
+            }
+        }
+
+        function getCollectionFromURL() {
+            let urlParams = new URLSearchParams(window.location.search);            // on récupère les paramètres de l'url (plus précisément le slug de la collection), pensez à mettre const quand variable constante, et let quand variable qui varie
+            return urlParams.get('collection');
+        }
+    </script>     <!-- fonction pour récupérer dynamiquement le nom de la collection (son slug) grâce à l'URL-->          
+
+    <!-- implémentation de Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+</html>

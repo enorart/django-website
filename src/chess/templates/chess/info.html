@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link  rel="stylesheet" href="{% static 'css/style.css' %}">    
+</head>
+<body>
+    <h1> Les utilisateurs enregistrés dans la base de données de l'application "chess" sont :</h1>
+    <ul>
+        {% for user in users %}             <!-- % est une balise de gabarits-->
+            <li>nom : {{ user.name }}, age = {{ user.age }}, email = {{ user.email}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

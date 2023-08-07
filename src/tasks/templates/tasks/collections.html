@@ -1,0 +1,14 @@
+<button class="list-group-item {% if request.GET.collection == collection.slug %}active{% endif %}"
+    data-bs-toggle="list"
+    hx-get="{% url 'tasks-get-task' collection.slug %}" 
+    hx-push-url="?collection={{ collection.slug }}"
+    hx-trigger="click"
+    hx-target="#tasks-container">
+    {{ collection.name }}
+</button>             
+
+
+
+<!-- si on considère les données |safe alors elles seront interpréter, ce qui est dangereux d'un point de vue cybersécurité-->   
+<!-- en réalité, on a pas besoin du hx-trigger car c'est le comportement par défaut du boutton, mais il faut le mettre si par exemple, on fait ça avec un div-->
+

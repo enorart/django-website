@@ -1,0 +1,15 @@
+<form methode="POST" class="d-flex justify-content-between mb-2 mt-2">
+
+    {% csrf_token %} 
+
+    <p>{{ task.description }}</p>
+    <button class="btn btn-danger"
+            hx-post="{% url 'tasks-delete-task' task.pk %}"
+            hx-target="closest form"   
+            hx-swap="outerHTML" 
+            type="submit">
+        -
+    </button>
+
+</form>
+
