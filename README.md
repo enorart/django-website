@@ -70,8 +70,8 @@ https://github.com/enorart/django-website/assets/135878234/f1dbef08-aeee-44ba-8b
 
 # To do
 
-* Chess application, to play chess on a the computer like chess.com but cheap haha
-* Link to navigate the site, for now, you have to access the page manually by changing the url. For example, to access the to-do-list web application you need to type /tasks after the main root of the url
+* [ ] Chess application, to play chess on a the computer like chess.com but cheap haha
+* [x] Link to navigate the site, for now, you have to access the page manually by changing the url. For example, to access the to-do-list web application you need to type /tasks after the main root of the url => done, see home page !
 
 # Reference 
 
