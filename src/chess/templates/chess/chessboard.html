@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game</title>
+    <link  rel="stylesheet" href="{% static 'css/style-chess.css' %}">  
+
+</head>
+<body>
+    <h1>Chess Game</h1>
+
+    <button onclick="rotateChessboard()">Rotate</button>
+    
+    <table class="chessboard">
+        <tr>
+            {% for piece in chessboard_7 %}
+            
+                <td class="{% cycle 'dark' 'light' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_6 %}
+
+                <td class="{% cycle 'light' 'dark' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            
+            {% endfor %}
+        </tr>
+                
+        <tr>
+            {% for piece in chessboard_5 %}
+
+                <td class="{% cycle 'dark' 'light' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                         <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_4 %}
+                <td class="{% cycle 'light' 'dark' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_3 %}
+                <td class="{% cycle 'dark' 'light' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_2 %}
+                <td class="{% cycle 'light' 'dark' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_1 %}
+                <td class="{% cycle 'dark' 'light' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            {% for piece in chessboard_0 %}
+                <td class="{% cycle 'light' 'dark' %}" onclick="SwitchFunction(this)">
+                    {% if piece %}
+                        <img src="{% static piece.picture %}" alt="{{ piece.name }}" class="piece">
+                    {% endif %}
+                    
+                    {% if not piece %}
+                        <img src="{% static 'chess/empty_cell.png' %}" alt="empty">
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+
+    <script>
+        let rotated = false;
+      
+        function rotateChessboard() {
+            const chessboard = document.querySelector('.chessboard');
+            const pieces = document.querySelectorAll('.piece');
+            
+            if (!rotated) {
+                chessboard.style.transform = 'rotate(90deg)';
+                pieces.forEach(piece => {
+                    piece.style.transform = 'rotate(-90deg)';
+                });
+            } else {
+                chessboard.style.transform = 'rotate(-90deg)';
+                pieces.forEach(piece => {
+                    piece.style.transform = 'rotate(90deg)';
+                });
+                
+            }
+            rotated = !rotated;
+        }
+    </script>
+
+    <script>
+        let clicked = false;
+
+        function handleFirstClick(pieceElement) {
+       
+        const rowIndex = pieceElement.parentNode.rowIndex;  // Récupérer l'indice de la ligne
+        const row = Math.abs(rowIndex-7);           //Reformatage de l'indice de la ligne (c'était inversé)
+        const cellIndex = pieceElement.cellIndex;           // Récupérer l'indice de la cellule
+
+        // Coordonnées du carré
+        console.log("Clic (1) sur le carré à la position : ", row, cellIndex);
+        } 
+   
+        function handleSecondClick(pieceElement) {
+
+        const rowIndex = pieceElement.parentNode.rowIndex;  // Récupérer l'indice de la ligne
+        const row = Math.abs(rowIndex-7);           //Reformatage de l'indice de la ligne (c'était inversé)
+        const cellIndex = pieceElement.cellIndex;           // Récupérer l'indice de la cellule
+
+        // Coordonnées du carré
+        console.log("Clic (2) sur le carré à la position : ", row, cellIndex);
+        }
+
+        
+        function SwitchFunction(pieceElement) {
+            
+            if (clicked) {
+                handleSecondClick(pieceElement);
+            } else {
+                handleFirstClick(pieceElement);
+            }
+            clicked = !clicked;
+        }
+
+    </script>
+
+</body>
+</html>

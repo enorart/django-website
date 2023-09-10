@@ -5,9 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About-us</title>
-    <link  rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link  rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> 
+
 </head>
 <body>
-    <h1>Je m'appelle Enora, et voici mon premier site internet</h1>
+    <header class="d-flex align-items-center justify-content-between gap-4 ms-4 mt-4 mb-4">
+    <div class="d-flex align-items-center gap-2">
+        <img src="{% static 'css/profile-picture.png' %}" class="rounded" alt="profile picture" width="120" height="120">
+        <h1>Eno</h1>
+    </div>
+   
+    <div class="d-flex align-items-center gap-2">
+        <img src="https://cdn-icons-png.flaticon.com/32/5262/5262027.png" alt="Toggle theme">
+        <div class="form-check form-switch">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="theme-switch"
+                checked
+                onclick="toggleTheme()"
+            />
+        </div>
+    </div>
+        
+    </header>
+
+    <div class="container-fluid mt-4 mb-4">
+        <div class="d-flex gap-2">
+        <div class="spinner-border text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h3 class="text">System launching........ </h3>
+        </div>
+        <ul class="nav nav-tabs mt-4">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Bio</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Link</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://github.com/enorart">Github</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://www.djangoproject.com/">Django</a></li>
+                <li><a class="dropdown-item" href="https://htmx.org/">HTMX</a></li>
+                <li><a class="dropdown-item" href="https://getbootstrap.com/">Bootstrap</a></li>
+              </ul>
+            </li>
+        </ul>
+        <br>
+        <p>Hi !</p>
+        <p>I created this site in order to discover the django framework. I also used Bootstrap 5 and HTMX technologies.</p> 
+        <p>The site doesn't really make sense, nor is it useful, it just served me as a practice.You will find on the home page the various web applications made in this site</p>
+        <p>And me ?</p> 
+        <p> I am in engineering school specializing in computer science. I work by myself in the fields of artificial intelligence (computer vision) and the creation of small websites like this one.</p>
+        <p>I am open to working on lots of different projects, to gain as much experience as possible and improve myself in various fields of IT.</p>
+    </div>
+
+    <script>
+    function toggleTheme() {
+        const theme = document.documentElement.getAttribute('data-bs-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
